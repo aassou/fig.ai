@@ -17,6 +17,8 @@ const Home = () => {
     const [loading, setLoading] = useState(false);
     const [searchText, setSearchText] = useState('');
     const [allPosts, setAllPosts] = useState(null);
+    const [searchedResults, setSearchedResults] = useState(null);
+    const [searchTimeout, setSearchTimeout] = useState(null);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -46,6 +48,21 @@ const Home = () => {
         fetchPosts();
     }, []);
 
+    const handleSearchChange = (e) => {
+        clearTimeout(searchTimeout);
+        setSearchText(e.target.value);
+
+        setSearchTimeout(
+            setTimeout(() => {
+                const searchResults = allPosts.filter(
+                    (item) => item.name.toLowerCase().includes(searchText.toLowerCase())
+                )
+
+                setSearchedResults(searchResults);
+            }, 500)
+        )
+    }
+
     return (
         <section className='max-w-7xl mx-auto'>
             <div>
@@ -58,7 +75,14 @@ const Home = () => {
                 </p>
             </div>
             <div className='mt-16'>
-                <FormField />
+                <FormField 
+                    labelName="Search posts"
+                    type="text"
+                    name="text"
+                    placeholder="Search posts"
+                    value={searchText}
+                    handleChange={handleSearchChange}
+                />
             </div>
             <div className='mt-10'>
                 {loading ? 
@@ -70,7 +94,7 @@ const Home = () => {
                         <>
                             {searchText && (
                                 <h2 className='font-medium text-[#666e75] text-xl mb-3'>
-                                    Showing results for 
+                                    Showing results for&nbsp;
                                     <span className='text-[#222328]'>
                                         {searchText}
                                     </span>
@@ -80,7 +104,7 @@ const Home = () => {
                                 {searchText ? 
                                     (
                                         <RenderCards 
-                                            data={[]}
+                                            data={searchedResults}
                                             title="No search results found"
                                         />
                                     ) : (
