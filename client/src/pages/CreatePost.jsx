@@ -21,7 +21,7 @@ const CreatePost = () => {
       try {
         setGeneratingImg(true);
         const response = await fetch(
-          'http://localhost:8080/api/v1/novita', 
+          'https://fig-ai.onrender.com/api/v1/novita', 
           {
             method: 'POST',
             headers: {
@@ -51,7 +51,7 @@ const CreatePost = () => {
       setLoading(true);
 
       try {
-        const response = await fetch('http://localhost:8080/api/v1/post', 
+        const response = await fetch('https://fig-ai.onrender.com/api/v1/post', 
           {
             method: 'POST',
             headers: {
