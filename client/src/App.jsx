@@ -1,7 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
+
+import { CubeTransparentIcon } from '@heroicons/react/24/solid'
 import { logo } from './assets';
+import ai_logo from './assets/ai_logo.jpg';
 import { Home, CreatePost } from './pages' ;
 
 const App = () => {
@@ -11,7 +14,10 @@ const App = () => {
       justify-between items-center bg-white 
       sm:px-8 px-4 py-4 border-b-[#e6ebf4]'>
         <Link to="/">
-          <img src={logo} alt='logo' className='w-28 object-contain' />
+          <CubeTransparentIcon 
+            className="inline-block h-10 w-10 text-black-500" 
+          />
+          <h1 className='font-mono inline-block'>fig.ai</h1>
         </Link>
         <Link 
           to="/create-post" 

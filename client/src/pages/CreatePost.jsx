@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { FormField, Loader } from '../components'
+import SpeechToText from '../components/SpeechToText'
 
 import { preview } from '../assets'
 import { getRandomPrompt } from '../utils'
@@ -15,6 +16,7 @@ const CreatePost = () => {
   })
   const [generatingImg, setGeneratingImg] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [transcript, setTranscript] = useState('')
 
   const generateImage = async () => {
      if(form.prompt) {
@@ -82,6 +84,11 @@ const CreatePost = () => {
     setForm({ ...form, prompt: randomPrompt })
   }
 
+  const handleTranscriptChange = (newTranscript) => {
+    setTranscript(newTranscript);
+    setForm({ ...form, prompt: newTranscript });
+  }
+
   return (
     <section className='max-w-7xl mx-auto'>
       <div>
@@ -94,6 +101,7 @@ const CreatePost = () => {
           </p>
       </div>
 
+      <SpeechToText onTranscriptChange={handleTranscriptChange} />
       <form className='mt-16 max-w-3xl' onSubmit={handleSubmit}>
         <div className='flex flex-col gap-5'>
           <FormField 
@@ -113,6 +121,7 @@ const CreatePost = () => {
             handleChange={handleChange}
             isSurpriseMe
             handleSupriseMe={handleSupriseMe}
+            handleTranscriptChange={handleTranscriptChange}
           />
 
           <div className='relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-48rem p-3 h-48rem flex justify-center items-center'>

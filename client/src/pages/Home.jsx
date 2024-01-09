@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Loader, Card, FormField } from '../components' 
+import { Loader, Card, FormField } from '../components'
+import SpeechToText from '../components/SpeechToText'
 
 const RenderCards = ({ data, title}) => {
     if(data?.length > 0) {
@@ -19,6 +20,7 @@ const Home = () => {
     const [allPosts, setAllPosts] = useState(null);
     const [searchedResults, setSearchedResults] = useState(null);
     const [searchTimeout, setSearchTimeout] = useState(null);
+    const [transcript, setTranscript] = useState('');
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -63,6 +65,11 @@ const Home = () => {
         )
     }
 
+    const handleTranscriptChange = (newTranscript) => {
+      setTranscript(newTranscript);
+      setSearchText(newTranscript);
+    }
+
     return (
         <section className='max-w-7xl mx-auto'>
             <div>
@@ -70,7 +77,7 @@ const Home = () => {
                     The Community Showcase
                 </h1>
                 <p className='mt-2 text-[#666e75] text-[16px] max-w-[500px]'>
-                    Use your imagination and let the DALL-E AI 
+                    Use your imagination and let the NovitaAI 
                     generates some stunninng images for you!
                 </p>
             </div>
@@ -82,6 +89,11 @@ const Home = () => {
                     placeholder="Search posts"
                     value={searchText}
                     handleChange={handleSearchChange}
+                    handleTranscriptChange={handleTranscriptChange}
+                />
+                <SpeechToText 
+                    onTranscriptChange={handleTranscriptChange}
+                    buttonTitle='What you are looking for ?'
                 />
             </div>
             <div className='mt-10'>
